@@ -27,6 +27,19 @@ services:
     ports:
       - "27017:27017"
 
+  json-server:
+    build: ./docker/json-server
+    healthcheck:
+      test: ["CMD", "curl", "http://localhost:3000/health"]
+      interval: 3s
+      start_period: 2s
+      retries: 3
+    command: ["/data/db.json"]
+    volumes:
+      - ./docker/json-server/data:/data
+    ports:
+      - 3000:3000
+
   trade-imports-data-api-stub:
     image: defradigital/trade-imports-data-api-stub:${TRADE_IMPORTS_DATA_API_STUB:-latest}
     env_file:
@@ -49,6 +62,8 @@ services:
       localstack:
         condition: service_healthy
       mongodb:
+        condition: service_healthy
+      json-server:
         condition: service_healthy
       trade-imports-data-api-stub:
         condition: service_healthy
