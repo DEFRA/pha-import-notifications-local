@@ -1,4 +1,22 @@
 services:
+  localstack:
+    image: localstack/localstack:4.11.1
+    environment:
+      - LOCALSTACK_HOST=localhost
+      - SERVICES=s3,sqs,sns,dynamodb
+      - LS_LOG=WARN
+    env_file:
+      - ./config/defaults.env
+    volumes:
+      - ./scripts/localstack:/etc/localstack/init/ready.d
+    healthcheck:
+      test: ["CMD", "test", "-f", "/tmp/READY"]
+      interval: 5s
+      start_period: 10s
+      retries: 12
+    ports:
+      - "4566:4566"
+
   mongodb:
     image: mongo:6.0.13
     healthcheck:
@@ -28,6 +46,8 @@ services:
       - ./config/defaults.env
       - ./config/pha-import-notifications.env
     depends_on:
+      localstack:
+        condition: service_healthy
       mongodb:
         condition: service_healthy
       trade-imports-data-api-stub:
