@@ -1,4 +1,22 @@
 services:
+  localstack:
+    image: localstack/localstack:4.11.1
+    environment:
+      - LOCALSTACK_HOST=localhost
+      - SERVICES=s3,sqs,sns,dynamodb
+      - LS_LOG=WARN
+    env_file:
+      - ./config/defaults.env
+    volumes:
+      - ./scripts/localstack:/etc/localstack/init/ready.d
+    healthcheck:
+      test: ["CMD", "test", "-f", "/tmp/READY"]
+      interval: 5s
+      start_period: 10s
+      retries: 12
+    ports:
+      - "4566:4566"
+
   mongodb:
     image: mongo:6.0.13
     healthcheck:
@@ -8,6 +26,19 @@ services:
       retries: 3
     ports:
       - "27017:27017"
+
+  json-server:
+    build: ./docker/json-server
+    healthcheck:
+      test: ["CMD", "curl", "http://localhost:3000/health"]
+      interval: 3s
+      start_period: 2s
+      retries: 3
+    command: ["/data/db.json"]
+    volumes:
+      - ./docker/json-server/data:/data
+    ports:
+      - 3000:3000
 
   trade-imports-data-api-stub:
     image: defradigital/trade-imports-data-api-stub:${TRADE_IMPORTS_DATA_API_STUB:-latest}
@@ -28,7 +59,11 @@ services:
       - ./config/defaults.env
       - ./config/pha-import-notifications.env
     depends_on:
+      localstack:
+        condition: service_healthy
       mongodb:
+        condition: service_healthy
+      json-server:
         condition: service_healthy
       trade-imports-data-api-stub:
         condition: service_healthy
