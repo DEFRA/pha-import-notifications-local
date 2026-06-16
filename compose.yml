@@ -1,24 +1,16 @@
 services:
-  localstack:
-    image: localstack/localstack:4.11.1
-    environment:
-      - LOCALSTACK_HOST=localhost
-      - SERVICES=s3,sqs,sns,dynamodb
-      - LS_LOG=WARN
+  floci:
+    image: floci/floci:1.5.25-compat
     env_file:
-      - ./config/defaults.env
+      - ./config/aws.env
+      - ./config/floci.env
     volumes:
-      - ./scripts/localstack:/etc/localstack/init/ready.d
-    healthcheck:
-      test: ["CMD", "test", "-f", "/tmp/READY"]
-      interval: 5s
-      start_period: 10s
-      retries: 12
+      - ./scripts/floci:/etc/floci/init/ready.d
     ports:
       - "4566:4566"
 
   mongodb:
-    image: mongo:6.0.13
+    image: mongo:6.0.28
     healthcheck:
       test: ["CMD", "mongosh", "--eval", "db.hello().ok"]
       interval: 5s
@@ -43,7 +35,6 @@ services:
   trade-imports-data-api-stub:
     image: defradigital/trade-imports-data-api-stub:${TRADE_IMPORTS_DATA_API_STUB:-latest}
     env_file:
-      - ./config/defaults.env
       - ./config/trade-imports-data-api-stub.env
     healthcheck:
       test: ["CMD", "curl", "http://localhost:8085/health"]
@@ -56,10 +47,10 @@ services:
   pha-import-notifications:
     image: defradigital/pha-import-notifications:${PHA_IMPORT_NOTIFICATIONS:-latest}
     env_file:
-      - ./config/defaults.env
+      - ./config/aws.env
       - ./config/pha-import-notifications.env
     depends_on:
-      localstack:
+      floci:
         condition: service_healthy
       mongodb:
         condition: service_healthy
