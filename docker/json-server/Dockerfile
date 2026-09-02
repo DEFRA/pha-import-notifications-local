@@ -8,6 +8,8 @@ RUN npm install --global json-server@${JSON_SERVER_VERSION}
 
 WORKDIR /app
 
+USER node
+
 EXPOSE 3000
 
 ENTRYPOINT ["json-server"]
