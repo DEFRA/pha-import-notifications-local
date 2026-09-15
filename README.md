@@ -16,7 +16,7 @@ Install the following:
 
 ### JWT
 
-Request a local JWT as follows:
+Request a local dev JWT as follows:
 
 ```bash
 curl -X POST http://localhost:8080/oauth2/token -d grant_type=client_credentials -d client_id=LocalDev
