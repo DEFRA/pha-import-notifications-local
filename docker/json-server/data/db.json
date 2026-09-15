@@ -1,8 +1,0 @@
-{
-  "health": {
-    "status": "ok"
-  },
-  "token": {
-    "access_token": "local_jwt"
-  }
-}
