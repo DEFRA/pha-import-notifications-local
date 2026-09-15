@@ -1,0 +1,17 @@
+name: ext-test
+variables:
+  - name: token_url
+    value: https://pha-import-notifications-8ec5c.auth.eu-west-2.amazoncognito.com
+    description: ""
+  - name: service_url
+    value: https://ephemeral-protected.api.ext-test.cdp-int.defra.cloud/pha-import-notifications
+    description: ""
+  - name: client_id
+    value: q9o9s5i3r0gq2cmsa7l1th12
+    description: ""
+  - secret: true
+    name: client_secret
+    description: ""
+  - secret: true
+    name: cdp_developer_api_key
+    description: ""

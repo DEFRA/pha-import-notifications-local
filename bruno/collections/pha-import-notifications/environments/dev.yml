@@ -1,0 +1,15 @@
+name: dev
+variables:
+  - name: token_url
+    value: https://pha-import-notifications-c63f2.auth.eu-west-2.amazoncognito.com
+    description: ""
+  - name: service_url
+    value: https://ephemeral-protected.api.dev.cdp-int.defra.cloud/pha-import-notifications
+    description: ""
+  - name: client_id
+    value: jmmr8tma9gdvgfcc2ijtgjar5
+    description: ""
+  - secret: true
+    name: client_secret
+  - secret: true
+    name: cdp_developer_api_key

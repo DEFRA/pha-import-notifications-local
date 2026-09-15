@@ -10,12 +10,17 @@ Docker Compose for running PHA import notifications services locally.
 ### Dependencies
 
 Install the following:
+
 - [Docker](https://docs.docker.com/engine/)
 - [Docker Compose](https://docs.docker.com/compose/)
 
 ### JWT
 
-Generate local JWT following the [instructions provided](https://github.com/DEFRA/pha-import-notifications/tree/main#endpoints), then replace the value of `access_token` in [`./docker/json-serve/data/db.json`](docker/json-serve/data/db.json).
+Request a local dev JWT as follows:
+
+```bash
+curl -X POST http://localhost:8080/oauth2/token -d grant_type=client_credentials -d client_id=LocalDev
+```
 
 ## Usage
 
