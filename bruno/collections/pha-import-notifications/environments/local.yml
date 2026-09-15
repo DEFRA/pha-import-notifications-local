@@ -1,0 +1,14 @@
+name: local
+variables:
+  - name: token_url
+    value: "{{service_url}}"
+  - name: service_url
+    value: http://localhost:8080
+  - name: client_id
+    value: LocalDev
+  - secret: true
+    name: client_secret
+    description: ""
+  - secret: true
+    name: cdp_developer_api_key
+    description: ""
