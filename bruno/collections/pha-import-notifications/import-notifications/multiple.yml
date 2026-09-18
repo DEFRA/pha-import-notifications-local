@@ -6,11 +6,6 @@ info:
 http:
   method: GET
   url: "{{service_url}}/import-notifications?bcp=GBTEEP1&from=2026-01-01T09:00:00Z&to=2026-01-01T09:59:00Z"
-  headers:
-    - name: Content-Type
-      value: application/json
-    - name: x-api-key
-      value: "{{cdp_developer_api_key}}"
   params:
     - name: bcp
       value: GBTEEP1

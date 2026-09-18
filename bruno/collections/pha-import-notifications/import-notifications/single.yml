@@ -6,11 +6,6 @@ info:
 http:
   method: GET
   url: "{{service_url}}/import-notifications/CHEDA.GB.2024.4792831"
-  headers:
-    - name: Content-Type
-      value: application/json
-    - name: x-api-key
-      value: "{{cdp_developer_api_key}}"
   auth: inherit
 
 settings:
