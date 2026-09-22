@@ -4,6 +4,11 @@ info:
   seq: 2
 
 request:
+  headers:
+    - name: Content-Type
+      value: application/json
+    - name: x-api-key
+      value: "{{cdp_developer_api_key}}"
   auth:
     type: oauth2
     flow: client_credentials
